@@ -15,17 +15,19 @@ while ($line = fgets($list)) {
     $listB[] = $b;
 }
 
+fclose($list);
+
 sort($listA);
 sort($listB);
 
 $distances = array_map(
     fn($locationA, $locationB) => abs($locationA - $locationB),
     $listA,
-    $listB
+    $listB,
 );
 
 $distance = array_sum($distances);
 
-file_put_contents('answer.txt', $distance);
+file_put_contents('answer-part-01.txt', $distance);
 
 printf("\n => Answer is: %d\n", $distance);
