@@ -1,0 +1,7 @@
+{
+    "name": "pocketninja/advent-of-code-2024",
+    "type": "project",
+    "require": {
+        "php": "^8.3"
+    }
+}
