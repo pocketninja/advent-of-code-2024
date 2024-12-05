@@ -17,14 +17,50 @@ $directions = [
     'down-right' => [1, -1],
     'down' => [0, -1],
     'down-left' => [-1, -1],
-    'left' => [0, -1],
+    'left' => [-1, 0],
     'left-up' => [-1, 1],
 ];
 
 $total = 0;
 
-// @todo - iterate x and y, when find 'x', search in all directions.
+$maxY = count($grid);
+$maxX = count($grid[0]);
 
-//file_put_contents('answer-part-01.txt', $total);
+for ($x = 0; $x < $maxX; $x++) {
+    for ($y = 0; $y < $maxY; $y++) {
+
+        $letter = $grid[$x][$y];
+
+        if ($letter !== 'X') {
+            continue;
+        }
+
+        echo sprintf("\n --> searching from %s,%s...", $x, $y);
+
+        foreach ($directions as $directionName => $direction) {
+
+            $word = $letter;
+
+            for ($i = 1; $i <= 3; $i++) {
+                $searchX = $x + $direction[0] * $i;
+                $searchY = $y + $direction[1] * $i;
+                $search = $grid[$searchX][$searchY] ?? '.';
+                $word .= $search;
+            }
+
+            if ($word !== 'XMAS') {
+                continue;
+            }
+
+            printf("\n     -> %s: %s", $directionName, $word);
+
+            $total++;
+        }
+
+    }
+}
+
+
+file_put_contents('answer-part-01.txt', $total);
 
 printf("\n => Answer is: %d\n", $total);
