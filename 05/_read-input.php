@@ -1,5 +1,6 @@
 <?php
 
+//$handle = fopen('./input/sample-page-and-rules.txt', 'r');
 $handle = fopen('./input/pages-and-rules.txt', 'r');
 
 $rules = [];

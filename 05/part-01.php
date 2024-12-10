@@ -7,6 +7,35 @@ chdir(__DIR__);
 
 $answer = 0;
 
+//$wrong = [75, 97, 47, 61, 53];
+//$right = [97, 75, 47, 61, 53];
+
+//$wrong = [61,13,29];
+//$right = [61,29,13];
+
+//$wrong = [97,13,75,29,47];
+//$right = [97,75,47,29,13];
+
+$fixSequence = function (array $sequence) use ($rules) {
+    usort(
+        $sequence,
+        function ($a, $b) use ($rules) {
+            $mustPrecede = $rules[$a] ?? [];
+            return in_array($b, $mustPrecede) ? -1 : 1;
+        },
+    );
+    return $sequence;
+};
+
+//print_r([
+//    'wrong' => implode(',', $wrong),
+//    'corrected' => implode(',', $fixSequence($wrong)),
+//    'right' => implode(',', $right),
+//    'solved?' => $right == $fixSequence($wrong),
+//]);
+
+$correctedSequences = [];
+
 foreach ($sequences as $sequence) {
     $pass = true;
 
@@ -38,6 +67,7 @@ foreach ($sequences as $sequence) {
     }
 
     if (!$pass) {
+        $correctedSequences[] = $fixSequence($sequence);
         continue;
     }
 
@@ -51,6 +81,22 @@ foreach ($sequences as $sequence) {
     $answer += $sequence[$midIndex];
 }
 
+$correctedSequenceAnswer = 0;
+foreach ($correctedSequences as $correctedSequence) {
+    $midIndex = floor(count($correctedSequence) / 2);
+    $correctedSequenceAnswer += $correctedSequence[$midIndex];
+
+    printf("\n-> corrected sequence: %s; [%d] => %d",
+        implode(',', $correctedSequence),
+        $midIndex, $correctedSequence[$midIndex],
+    );
+}
+
 file_put_contents('answer-part-01.txt', $answer);
 
-printf("\n => Answer is: %d\n", $answer);
+printf("\n => Answer part one is: %d\n", $answer);
+
+
+file_put_contents('answer-part-02.txt', $correctedSequenceAnswer);
+
+printf("\n => Answer part two is: %d\n", $correctedSequenceAnswer);
