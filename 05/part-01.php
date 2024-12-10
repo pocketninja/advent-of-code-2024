@@ -7,15 +7,6 @@ chdir(__DIR__);
 
 $answer = 0;
 
-//$wrong = [75, 97, 47, 61, 53];
-//$right = [97, 75, 47, 61, 53];
-
-//$wrong = [61,13,29];
-//$right = [61,29,13];
-
-//$wrong = [97,13,75,29,47];
-//$right = [97,75,47,29,13];
-
 $fixSequence = function (array $sequence) use ($rules) {
     usort(
         $sequence,
@@ -26,13 +17,6 @@ $fixSequence = function (array $sequence) use ($rules) {
     );
     return $sequence;
 };
-
-//print_r([
-//    'wrong' => implode(',', $wrong),
-//    'corrected' => implode(',', $fixSequence($wrong)),
-//    'right' => implode(',', $right),
-//    'solved?' => $right == $fixSequence($wrong),
-//]);
 
 $correctedSequences = [];
 
